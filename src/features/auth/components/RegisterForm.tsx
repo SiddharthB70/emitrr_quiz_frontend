@@ -1,23 +1,21 @@
-import { Button, TextField, Typography, Link } from "@mui/material";
+import { Button, Link, TextField, Typography } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
 import React, { useState } from "react";
-import login from "../api/login";
 import { AxiosError } from "axios";
-import { User } from "@/types";
 import { NotificationType } from "@/features/notification/types";
-import { Link as RouterLink } from "react-router-dom";
+import register from "../api/register";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
-const LoginForm = ({
-    addUser,
+const RegisterForm = ({
     addNotification,
 }: {
-    addUser: (newUser: User) => void;
     addNotification: (message: string, type: NotificationType) => void;
 }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
-    const loginUser = async (e: React.FormEvent) => {
+    const registerUser = async (e: React.FormEvent) => {
         e.preventDefault();
         const newUser = {
             username,
@@ -25,12 +23,12 @@ const LoginForm = ({
         };
 
         try {
-            const loggedUser = await login(newUser);
-            addUser(loggedUser);
+            const registeredUser = await register(newUser);
             addNotification(
-                `Logged in with user ${loggedUser.username}`,
+                `Registered user ${registeredUser.username}`,
                 "success",
             );
+            navigate("/");
         } catch (error) {
             if (error instanceof AxiosError && error.response)
                 addNotification(error.response.data, "error");
@@ -44,9 +42,9 @@ const LoginForm = ({
                 gutterBottom
                 component="h1"
             >
-                Login
+                Register
             </Typography>
-            <form onSubmit={loginUser}>
+            <form onSubmit={registerUser}>
                 <TextField
                     label="username"
                     variant="outlined"
@@ -79,22 +77,22 @@ const LoginForm = ({
                     color="success"
                     type="submit"
                 >
-                    Login
+                    Register
                     <LoginIcon />
                 </Button>
                 <Link
                     component={RouterLink}
-                    to="/register"
+                    to="/"
                     underline="hover"
                     sx={{
                         marginLeft: "20px",
                     }}
                 >
-                    <Typography sx={{ display: "inline" }}>Register</Typography>
+                    <Typography sx={{ display: "inline" }}>Login</Typography>
                 </Link>
             </form>
         </>
     );
 };
 
-export default LoginForm;
+export default RegisterForm;

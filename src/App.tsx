@@ -4,6 +4,8 @@ import { User } from "./types";
 import { useState } from "react";
 import { NotificationType, TNotification } from "./features/notification/types";
 import Notification from "./features/notification/components/Notification";
+import RegisterForm from "./features/auth/components/RegisterForm";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
     const [user, setUser] = useState<User>();
@@ -25,18 +27,34 @@ function App() {
     };
 
     return (
-        <>
+        <Container>
             <Notification notification={notification} />
-            <Container>
-                {!user && (
-                    <LoginForm
-                        addUser={addUser}
-                        addNotification={addNotification}
-                    />
-                )}
-                {user && <>Check</>}
-            </Container>
-        </>
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        !user ? (
+                            <LoginForm
+                                addUser={addUser}
+                                addNotification={addNotification}
+                            />
+                        ) : (
+                            <>Check</>
+                        )
+                    }
+                />
+                <Route
+                    path="/register"
+                    element={
+                        !user ? (
+                            <RegisterForm addNotification={addNotification} />
+                        ) : (
+                            <>Register Check</>
+                        )
+                    }
+                />
+            </Routes>
+        </Container>
     );
 }
 
