@@ -4,8 +4,15 @@ import React, { useState } from "react";
 import login from "../api/login";
 import { AxiosError } from "axios";
 import { User } from "@/types";
+import { NotificationType } from "@/features/notification/types";
 
-const LoginForm = ({ addUser }: { addUser: (newUser: User) => void }) => {
+const LoginForm = ({
+    addUser,
+    addNotification,
+}: {
+    addUser: (newUser: User) => void;
+    addNotification: (message: string, type: NotificationType) => void;
+}) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -19,9 +26,13 @@ const LoginForm = ({ addUser }: { addUser: (newUser: User) => void }) => {
         try {
             const loggedUser = await login(newUser);
             addUser(loggedUser);
+            addNotification(
+                `Logged in with user ${loggedUser.username}`,
+                "success",
+            );
         } catch (error) {
             if (error instanceof AxiosError && error.response)
-                console.log(error.response.data);
+                addNotification(error.response.data, "error");
         }
     };
 
