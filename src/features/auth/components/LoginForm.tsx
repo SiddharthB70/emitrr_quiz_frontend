@@ -1,10 +1,29 @@
 import { Button, TextField, Typography } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
-import { useState } from "react";
+import React, { useState } from "react";
+import login from "../api/login";
+import { AxiosError } from "axios";
+import { User } from "@/types";
 
-const Login = () => {
+const LoginForm = ({ addUser }: { addUser: (newUser: User) => void }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
+    const loginUser = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const newUser = {
+            username,
+            password,
+        };
+
+        try {
+            const loggedUser = await login(newUser);
+            addUser(loggedUser);
+        } catch (error) {
+            if (error instanceof AxiosError && error.response)
+                console.log(error.response.data);
+        }
+    };
 
     return (
         <>
@@ -15,7 +34,7 @@ const Login = () => {
             >
                 Login
             </Typography>
-            <form>
+            <form onSubmit={loginUser}>
                 <TextField
                     label="username"
                     variant="outlined"
@@ -62,4 +81,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default LoginForm;
