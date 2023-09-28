@@ -38,7 +38,7 @@ const RegisterForm = ({
     return (
         <>
             <Typography
-                variant="h2"
+                variant="h3"
                 gutterBottom
                 component="h1"
             >
@@ -56,6 +56,7 @@ const RegisterForm = ({
                     onChange={(e) => {
                         setUsername(e.target.value);
                     }}
+                    margin="normal"
                     required
                 ></TextField>
                 <TextField
@@ -70,6 +71,7 @@ const RegisterForm = ({
                     onChange={(e) => {
                         setPassword(e.target.value);
                     }}
+                    margin="normal"
                     required
                 ></TextField>
                 <Button

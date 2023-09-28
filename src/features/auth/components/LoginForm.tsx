@@ -40,7 +40,7 @@ const LoginForm = ({
     return (
         <>
             <Typography
-                variant="h2"
+                variant="h3"
                 gutterBottom
                 component="h1"
             >
@@ -59,6 +59,7 @@ const LoginForm = ({
                         setUsername(e.target.value);
                     }}
                     required
+                    margin="normal"
                 ></TextField>
                 <TextField
                     label="password"
@@ -73,6 +74,7 @@ const LoginForm = ({
                         setPassword(e.target.value);
                     }}
                     required
+                    margin="normal"
                 ></TextField>
                 <Button
                     variant="contained"
