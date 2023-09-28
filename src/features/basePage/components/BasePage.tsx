@@ -1,9 +1,11 @@
 import LeaderBoard from "@/features/leaderboard/components/LeaderBoard";
+import UserDetails from "@/features/userDetails/components/UserDetails";
+import { User } from "@/types";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Tab } from "@mui/material";
 import { useState } from "react";
 
-const BasePage = () => {
+const BasePage = ({ user }: { user: User }) => {
     const [value, setValue] = useState("1");
     return (
         <Box>
@@ -30,7 +32,9 @@ const BasePage = () => {
                     <LeaderBoard />
                 </TabPanel>
                 <TabPanel value="2">Quiz</TabPanel>
-                <TabPanel value="3">User</TabPanel>
+                <TabPanel value="3">
+                    <UserDetails user={user} />
+                </TabPanel>
             </TabContext>
         </Box>
     );

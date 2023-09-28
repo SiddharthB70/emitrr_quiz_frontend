@@ -53,7 +53,7 @@ function App() {
                                 addNotification={addNotification}
                             />
                         ) : (
-                            <BasePage />
+                            <BasePage user={user} />
                         )
                     }
                 />
@@ -63,7 +63,7 @@ function App() {
                         !user ? (
                             <RegisterForm addNotification={addNotification} />
                         ) : (
-                            <BasePage />
+                            <BasePage user={user} />
                         )
                     }
                 />
