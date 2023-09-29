@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { ILBScore, ILanguage } from "../types";
-import getLanguages from "../api/getLanguage";
 import { AxiosError } from "axios";
 import {
     MenuItem,
@@ -14,21 +13,9 @@ import {
 } from "@mui/material";
 import getLeaderBoard from "../api/getLeaderBoard";
 
-const LeaderBoard = () => {
-    const [languages, setLanguages] = useState<ILanguage[]>([]);
+const LeaderBoard = ({ languages }: { languages: ILanguage[] }) => {
     const [language, setLanguage] = useState<string>("");
     const [scores, setScores] = useState<ILBScore[]>([]);
-    useEffect(() => {
-        getLanguages()
-            .then((langs) => {
-                setLanguages(langs);
-                setLanguage(langs[0].language);
-            })
-            .catch((error) => {
-                if (error instanceof AxiosError)
-                    console.log(error.response?.data);
-            });
-    }, []);
 
     useEffect(() => {
         getLeaderBoard(language)
