@@ -36,7 +36,7 @@ function App() {
                 setUser(loggedInUser);
             })
             .catch(() => {
-                console.log("Logged in api error");
+                return;
             });
     }, []);
 
